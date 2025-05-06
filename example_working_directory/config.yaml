@@ -164,6 +164,11 @@ mutations_frequencies_heatmap: False           # set to True if the frequencies 
 # mutation statistics
 unique_genotypes_count_threshold: 5         # minimum number of reads of a particular genotype for that genotype to be included in unique genotypes count
 
+
+#Premium PCR demux settings
+
+do_aggregate: False             # When used for demultiplexing pooled Premium PCR of clonal sequences with fixed indices. The do_aggregate parameter specifies and extended report that is useful when there is only 1 UMI (clonal) per barcode combination group.
+
 # settings for dms view, which visualizes mutations onto a protein structure. These settings are required if a valid input file for that tool is desired
     # Data for all sample+barcode combinations will be converted to the proper format and output as dms_view_table.csv. See https://dms-view.github.io/ for instructions on how to use the tool
 #     # To use, all tags must use the same protein sequence and .pdb file
