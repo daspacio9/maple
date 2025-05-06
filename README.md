@@ -145,6 +145,7 @@ look something like this:
 │       │   ├── example_control_NT-mutation-distribution.csv
 │       │   ├── example_control_NT-mutation-frequencies.csv
 │       │   └── example_control_seq-IDs.csv
+│       ├── control_aggregate.csv #when clonal sequences are used with do_aggregate: True
 ├── plots
 │   ├── timepoints
 │   │   ├── example-IE5_AA-hamming-distance-distribution.html
