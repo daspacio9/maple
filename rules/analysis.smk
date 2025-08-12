@@ -746,6 +746,9 @@ rule aggregate:
     run:
         import pandas as pd
         from Bio import SeqIO
+        from Bio.Seq import Seq
+        from Bio.SeqRecord import SeqRecord
+        import os
         import gzip
         # Check if input files exist
         if not input.seq_ids:
@@ -791,8 +794,23 @@ rule aggregate:
             agg_df = agg_df.merge(seqs_df, on='seq_ID')
         except Exception as e:
             raise ValueError(f"Error merging dataframes: {str(e)}")
-
         # Write the combined DataFrame to a new CSV file
         agg_df.to_csv(output.agg, index=False)
 
+        fasta_dir = os.path.dirname('mutation_data/consensus_sequences/')
+        if not os.path.exists(fasta_dir):
+            os.makedirs(fasta_dir)
+
+        #Write the sequences to FASTA files
+        for idx, row in agg_df.iterrows():
+            filename = str(row['barcode']) +'_'+ str(row['seq_ID'])
+            sequence = str(row['sequence'])
+            record = SeqRecord(Seq(sequence), id=filename, description="Consensus sequence for " +str(row['seq_ID']) + " from tag " + wildcards.tag + " and maps to barcode " + row['barcode'])
+            fasta_path = os.path.join(fasta_dir, f"{filename}.fasta")
+            with open(fasta_path, "w") as fasta_out:
+                SeqIO.write(record, fasta_out, "fasta")
+
         print(f"Aggregated data for tag {wildcards.tag} saved to {output.agg}")
+
+
+
